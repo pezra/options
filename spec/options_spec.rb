@@ -13,6 +13,18 @@ describe Options do
       opts.getopt(:this).should eql('that')
       args.should eql([:foo])
     end
+
+    it "should be able to handle args list w/ only options hash" do 
+      args, opts = Options.parse([{:this => 'that'}])
+      args.should be_empty
+      opts.should have_key(:this)
+    end
+
+    it "should be able to handle args list w/o options hash" do 
+      args, opts = Options.parse([:foo])
+      args.should eql([:foo])
+      opts.should be_empty
+    end
   end
 
   describe "validation" do 

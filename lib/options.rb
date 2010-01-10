@@ -49,9 +49,15 @@ module Options
       case args
       when Array
         args.extend(Arguments) unless args.is_a?(Arguments)
-        [args, args.options.pop]
+        if args.last.kind_of? Hash
+          [args[0..-2], args.options]
+        else
+          [args, args.options]
+        end
+
       when Hash
         Options.for(args)
+
       else
         raise ArgumentError, "`args` should be and Array or Hash"
       end
